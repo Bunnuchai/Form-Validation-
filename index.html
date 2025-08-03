@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <title>มจท.16 - คำร้องขอโอนย้ายสาขาวิชาต่างคณะ</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-sky-100 min-h-screen flex items-center justify-center">
+
+  <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-2xl">
+    <h2 class="text-2xl font-bold mb-6 text-center text-cyan-600">มจท.16 - คำร้องขอโอนย้ายสาขาวิชาต่างคณะ</h2>
+
+    <form id="transferForm" class="space-y-5">
+      <div>
+        <label class="block text-sm font-medium text-gray-700">ชื่อ-นามสกุล</label>
+        <input type="text" id="fullname" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-cyan-500 focus:border-cyan-500">
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700">รหัสนักศึกษา</label>
+        <input type="text" id="studentId" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-cyan-500 focus:border-cyan-500">
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700">คณะเดิม</label>
+        <input type="text" id="currentFaculty" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-cyan-500 focus:border-cyan-500">
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700">สาขาวิชาเดิม</label>
+        <input type="text" id="currentMajor" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-cyan-500 focus:border-cyan-500">
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700">คณะใหม่ที่ต้องการโอนย้าย</label>
+        <input type="text" id="newFaculty" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-cyan-500 focus:border-cyan-500">
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700">สาขาวิชาใหม่ที่ต้องการโอนย้าย</label>
+        <input type="text" id="newMajor" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-cyan-500 focus:border-cyan-500">
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700">เหตุผลในการโอนย้าย</label>
+        <textarea id="reason" rows="3" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-cyan-500 focus:border-cyan-500"></textarea>
+      </div>
+
+      <div id="errorMsg" class="text-red-500 text-sm"></div>
+
+      <button type="submit" class="w-full bg-teal-600 text-white py-2 px-4 rounded-md hover:bg-teal-700 transition">ส่งคำร้อง</button>
+    </form>
+
+    <div id="successMsg" class="mt-4 text-green-600 font-semibold hidden text-center">
+      ✅ ส่งคำร้องเรียบร้อยแล้ว
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('transferForm');
+    const errorMsg = document.getElementById('errorMsg');
+    const successMsg = document.getElementById('successMsg');
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      errorMsg.textContent = '';
+      successMsg.classList.add('hidden');
+
+      const fullname = document.getElementById('fullname').value.trim();
+      const studentId = document.getElementById('studentId').value.trim();
+      const currentFaculty = document.getElementById('currentFaculty').value.trim();
+      const currentMajor = document.getElementById('currentMajor').value.trim();
+      const newFaculty = document.getElementById('newFaculty').value.trim();
+      const newMajor = document.getElementById('newMajor').value.trim();
+      const reason = document.getElementById('reason').value.trim();
+
+      if (fullname.split(' ').length < 2) {
+        errorMsg.textContent = 'กรุณากรอกชื่อ-นามสกุลให้ครบ';
+        return;
+      }
+
+      if (!/^\d{10}$/.test(studentId)) {
+        errorMsg.textContent = 'รหัสนักศึกษาต้องเป็นตัวเลข 10 หลัก';
+        return;
+      }
+
+      if (!currentFaculty || !currentMajor || !newFaculty || !newMajor || !reason) {
+        errorMsg.textContent = 'กรุณากรอกข้อมูลให้ครบทุกช่อง';
+        return;
+      }
+
+      successMsg.classList.remove('hidden');
+      form.reset();
+    });
+  </script>
+
+</body>
+</html>
